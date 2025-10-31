@@ -1,0 +1,53 @@
+service:
+  port: 9903
+  httpPort: 9905
+  isIstio: false
+  type: "transcode"
+  static: "./app"
+  whiteList: [KEY,CRT,MP4,FLV,AVI,WMV,3GP,MKV,RMVB,DAT,ASF,RM,RAM,MPG,MPEG,MOV,M4V,DVIX,DV,MKV,VOB,QT,CPK,FLI,FLC,MP3,WMA,WAV,MID,MIDD,KAR,OGG,M4A,RA,RAM,MOD,PDF,DOC,DOCX,PPT,PPTX,XLSX,TXT,PNG,JPG,GIF,ZIP,APK]
+  directory: "/var/www/html/media"
+  hookUrl: "http://saasapi:6090/v1/bag/notify"
+  access: "https://${DOMAIN_OR_PUBLICIP}/bag/bag/"
+  hookimporturl: ""
+logger:
+  console: true
+  level: "debug"
+cache:
+  duration: 86400 
+  ticker: 3600 
+document:
+  url: ""
+cover:
+  startTime: "00:00:01"
+  dimension: "640x360"
+transcode:
+  precision: 0
+mongo:
+  url: "mongodb://mongodb:27017/bag"
+  db: "bag"
+editor:
+  dimensions: "1080x720"
+  quality: 1
+  mediaDirectory: "data"
+  temporary: "/tmp/editor"
+  frameRate: 10
+  shareRepository: false
+aws:
+  accessKeyId: "test"
+  secretAccessKey: "test"
+  endpoint: ""
+  queue: "bag"
+  region: "cn"
+  retrySleep: 5
+  retryCount: 5
+minio:
+  endPoint: "minio:9000"
+  accessKeyId: "admin"
+  secretAccessKey: "admin@123"
+  useSSL: false
+  bucketName: "store"
+  location: "cn"
+  useHttps: true
+  capacity: 10
+mocks:
+  file: ""

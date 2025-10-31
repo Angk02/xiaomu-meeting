@@ -1,0 +1,47 @@
+common:
+  nats: "nats://nats:4222"
+  request: "roomServer-request"
+  response: "roomServer-response"
+  bordcast: "roomServer-bordCast"
+  port: 8886
+  boardCastLimit: 3
+  natsUser: "brtc"
+  natsPwd: "yyds"
+  dc: "default"
+  boardCastDelay: 100
+  mpcTimeLimit: 30
+  roomMaxNum: 40000
+  masterServer: "http://master-service:8885"
+redis:
+  address: 'redis:6379'
+  password: 'privated'
+  db: 14
+logger:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/message.log"
+    size: 500
+    count: 3
+report:
+  caller: true
+  level: "debug"
+  logs:
+    path: "logs/report.log"
+    isUTC: true
+    size: 500
+    count: 3
+
+jwt:
+  secret: "vloud"
+  expires: 3600
+indicators:
+  diskHealthGb: 3
+kafka:
+  brokers: 
+  group: "default"
+  version: "2.0.0"
+  rtcMessageTopic: "rtc-message-prod"
+  rtcsMessageTopic: "rtcs-message-prod"
+  user: ""
+  passowrd: ""

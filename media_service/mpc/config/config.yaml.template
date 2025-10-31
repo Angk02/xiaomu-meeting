@@ -1,0 +1,95 @@
+logger:
+  caller: true
+  level: debug
+  logs:
+    path: logs/mpc.log
+    size: 500
+nats:
+  url: 'nats://nats:4222'
+  pubTopic: roomServer-request
+  mainSubTopic: roomServer-bordCast
+  subTopics:
+    - mpm.broadcast.mock.01
+  user: "brtc"
+  password: "yyds"
+server:
+  iceServers:
+    - ''
+  location: "bj"
+  addr: puller
+  publicAddr: "${DOMAIN_OR_PUBLICIP}"
+  port: 8081
+  publicPort: 80
+  sport: "1443"
+  publicSPort: "1443"
+  publicWtPort: "1443"
+  wtPort: "1443"
+  name: vloud
+  ssl:
+    cert: "certs/baijiayun.com.crt"
+    key: "certs/baijiayun.com.key"
+  methods:
+    - sendMessage
+    - getUsers
+    - getUserList
+    - queryUser
+    - getServers
+    - setMediaRelation
+  key: vloud
+  backdoorToken: BRTC
+  vttoken: paas_user_jwt_auth_secret
+  requestRTCSTimeout: 10000
+client:
+  retrySecond: 3
+  registerSecond: 10
+  disconnectTimes: 5
+  methods:
+    - leaveUser
+    - sendMessage
+    - publishStream
+    - unpublishStream
+    - subscribeStream
+    - unsubscribeStream
+    - streamUpdated
+    - joinUser
+    - streamUpdate
+    - userRejoined
+    - evicted
+    - roomClosed
+    - rebuildMediaRelation
+    - changeSignalNode
+report:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/report.log"
+    isUTC: true
+    size: 500
+    count: 3
+authurl: ''
+trace:
+  addr: ''
+  name: 
+streamTaskTimeout: 3
+wsjsonRpc:
+  subChanSize: 512
+sequence:
+  version: 1
+  checkinterval: 10
+  waitTime: 2000
+  goRoutines: 4
+request:
+  keepAlive: true
+  timeout: 9000
+  retryCount: 2
+  retryDelay: 50
+pullerRtc: 'http://router:8999'
+jwt:
+  secret: vloud
+  expires: 3600
+master:
+  url: 'http://master:8885/api/v1/areas'
+  secondUrl: 'http://master:8885/api/v1/areas'
+  interval: 2
+  ipLoaderUrl: 'http://master:8885/api/v1/event/policy'
+validateToken: true

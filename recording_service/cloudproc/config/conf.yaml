@@ -1,0 +1,21 @@
+ip: process.env.POD_IP,
+http:
+  timeout: 10
+oss:
+  al_bj_endpoint: ""
+  retry: 3
+  sign_url_expire_day: 180
+bag:
+  url: "http://bag:9905/bag/file/upload"
+queue:
+  addr: "amqp://yulu:yulu@rabbitmq:5672/"
+  name: "cloudproc"
+  count: 2
+file:
+  prefix: "/nas"
+log:
+  level: "debug"
+tmpDir: "/tmp"
+notifyUriPrefix: ""
+retryPort: ":8003"
+

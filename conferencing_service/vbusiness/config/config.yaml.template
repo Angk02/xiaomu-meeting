@@ -1,0 +1,101 @@
+appEnv: "dev"
+appUrl: "https://${DOMAIN_OR_PUBLICIP}/vbusiness/"
+hostMeeting: ""
+zhTip: ""
+enTip: ""
+meetingUserSeparator: "-"
+immediateMeetingStatusCheckTime: 60
+private: 3
+privateKey: "VqbBuN2PbHxofsql"
+privateSecret: "6HNKfAAC1QbfYIsDFlww"
+checkSignature: true
+
+closeBuy: true
+meetingResource:
+  limitAttender: 1
+  limitDuration: 45
+  limitBuyAttender: 10
+  maxAttender: 100000
+  maxDuration: 14400
+web:
+  host: "http://vbusiness:6071"
+  port: 6071
+  mode: debug
+  mcu: bmcu
+  license: pBgB/b2nsrzlAXWFLmr7/g8jvlRsCIdJa14tYuMsDVVS8gZHjr9G/En6GxxqzKqwK3In4fZqBR3NJLwLpKzO3ib2HgJwPB1f8AHId1IKYHAhPe/20HM9BAeAvF2LcVtXWTAKnt7cPG1G/LYOCzNDa1z0dEeZKWFRAbVph+HVv7I=
+
+log:
+  - name: "default"
+    save: 7
+    file: "log.txt"
+  - name: "meetingCallBack"
+    save: 7
+    file: "meetingCallBack.txt"
+  - name: "meetingLog"
+    save: 7
+    file: "meetingLog.txt"
+  - name: "meetingCycleLog"
+    save: 7
+    file: "meetingCycleLog.txt"
+  - name: "saasApi"
+    save: 7
+    file: "saasApi.txt"
+  - name: "device"
+    save: 7
+    file: "device.txt"
+  - name: "stream"
+    save: 7
+    file: "stream.txt"
+  - name: "console"
+    save: 7
+    file: "console.txt"
+  - name: "gin"
+    save: 7
+    file: "gin.txt"
+  - name: "sql"
+    save: 3
+    file: "sql.txt"
+db: "root:root@tcp(mysql:3306)/vbusiness?charset=utf8&parseTime=True&loc=Local"
+datasource:
+  maxOpenConn: 300
+redis:
+  host: "redis:6379"
+  pwd: "privated"
+  db: 4
+saasApi:
+  host: "http://saasapi:6090"
+  externalHost: "https://${DOMAIN_OR_PUBLICIP}/saasapi/"
+  appId: "privateSaasVsBuN2PbHxofsql"
+  appSecret: "saasPrivateMdm2zUoVYml2icml"
+  nonce: "EycLQsHwxhzK9OW8UEKWNfH2I3CGR2nINuU1EBpQ"
+
+quality:
+  bandWidth: 2048
+  lowBand: 200
+  maxBand: 1024
+weburl:
+  host: https://${DOMAIN_OR_PUBLICIP}/ 
+  boom: https://${DOMAIN_OR_PUBLICIP}/vbusiness/ 
+  bms: https://${DOMAIN_OR_PUBLICIP}/admin/ 
+  awaken: https://${DOMAIN_OR_PUBLICIP}/p 
+  deviceQr: https://${DOMAIN_OR_PUBLICIP}/p/#/rooms 
+  gwHost: https://${DOMAIN_OR_PUBLICIP}/admin/ #后台官网
+  saasDomain: https://${DOMAIN_OR_PUBLICIP}/web-sdk/
+
+bill:
+  default:
+    a: 0.012
+    v360: 0.03
+    v720: 0.05
+    v1080: 0.12
+  cloudRecord:
+    a: 0.012
+    v360: 0.03
+    v720: 0.05
+    v1080: 0.12
+  cloudPush:
+    a: 0.012
+    v360: 0.03
+    v720: 0.05
+    v1080: 0.12
+

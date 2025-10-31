@@ -1,0 +1,37 @@
+Common:
+  type : Puller
+  ip : "puller" # need replace with new ip
+  port : 8992
+  location : bj
+  serviceName: "Puller"
+  traceAddr: "127.0.0.1:6666"
+  sentinelUrl : "sentinel:9804/logicAreaNode"
+  routerUrl : "http://router:8999"
+  retryTimes : 3
+  skipAuth: false
+  jwtSecret : vloud
+  shutdownTimeout: 30
+  timeoutSecond : 10
+  retrySubLimit : 2
+  retrySubInterval : 200
+  minDiskHealthGB: 1
+  redisConfig:
+    address: 
+      - 'redis:6379'
+    password: 'privated'
+    db: 11
+    prefix: "puller::"
+  report:
+    caller: true
+    level: "info"
+    logs:
+      path: "logs/report.log"
+      isUTC: true
+      size: 500
+      count: 3
+logger:
+  caller: true
+  level: "debug"
+  logs:
+    path: "logs/puller.log"
+    size: 500

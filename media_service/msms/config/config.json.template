@@ -1,0 +1,92 @@
+{
+  "ip": "${MSMS_IP}",
+  "externalIP": "${MSMS_EXTERNALIP}",
+  "dynamicIp": false,
+  "enableInnerCandidates": true,
+  "dynamicUrl": "http://exchangeip-service.test-pro-center:5000/",
+  "port": 31822,
+  "mediasoup": {
+    "logLevel": "warn",
+    "logTags": [
+      "rtp",
+      "dtls",
+      "ice"
+    ],
+    "listenPort": [10000,10001],
+    "rtcMinPort": [15003, 20001],
+    "rtcMaxPort": [19999, 24999],
+    "rtcTcpPort": 40001,
+    "rtcIPv4": "192.168.250.130",
+    "rtcAnnouncedIp": "192.168.250.130",
+    "udpTimeout": 200000,
+    "dtlsCertificateFile": "",
+    "dtlsPrivateKeyFile": "",
+    "tcpIceDelay": 3
+  },
+  "sentinel": {
+    "ip": "127.0.0.1",
+    "port": 9806,
+    "interval": 2000,
+    "type": "msms"
+  },
+   "center": {
+    "url": "",
+    "interval": 1000
+  },
+  "puller": "http://127.0.0.1:8992",
+  "kafka": {
+    "address": "",
+    "topic": "",
+    "iceTopic": "",
+    "interval": 5000,
+    "rejectUnauthorized": true
+  },
+  "jwt": {
+    "secret": "vloud",
+    "expires": 3600
+  },
+  "logLevel": "warn",
+  "restful": {
+    "certificateFile": "",
+    "privateKeyFile": ""
+  },
+  "feature": {
+	  "tcpStream": false,
+	   "mimeType": ["video/flexfec-03","audio/flexfec-03","video/crsfec","audio/crsfec"]
+  },
+  "dispatcher": {
+	"thresholdCpu": 60,
+     	"advance": 0.01,
+       	"advanceTimeout": 5000,
+       	"pubCpu": 10,
+	"paddingTimeout": 2000,
+	"statisticsInterval": 1000,
+	"pipelineCleanInterval": 60000
+    },
+    "conn":{
+  "eliminationThreshold": 24,
+  "timeout": 50,
+  "interval": 3600,
+  "used": true
+  },
+  "check":{
+      "enable": false,
+      "count": 12
+      
+  },
+   "agent":{
+    "register":"http://127.0.0.1:9804/report",
+    "interval":2
+    
+  },
+   "maxBand": 300,
+   "mtr" :{
+       "enable": false,
+        "sampleCount": 3,
+        "maxLostRate":20,
+        "IpKeeplive": 600,
+        "rtt": 100,
+        "MaxMtrCount" : 50,
+        "IcmpPacketCount": 50
+    }
+}

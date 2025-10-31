@@ -1,0 +1,48 @@
+logger:
+  caller: true
+  level: "debug"
+  logs:
+    async: true
+    path: "logs/mpc.log"
+    size: 500
+nats:
+  url: "nats://nats:4222"
+  pubTopic: "bloud-roomServer-request" 
+  reqSubTopic: "bloud-roomServer-response"
+  mainSubTopic: "bloud-roomServer-bordCastMpc" 
+  user: ""
+  password: ""
+  reconnectWait: 30
+server:
+  location: bj
+  debug: true
+  addr: "brtcmpc"
+  publicAddr: "${DOMAIN_OR_PUBLICIP}"
+  port: 8081
+  publicPort: 2443
+  sport: 8082
+  publicSPort: 2443
+  name: "bloud.mpc"
+  ssl:
+    cert: "./certs/mpc.cert"
+    key: "./certs/mpc.key"
+  writeTimeoutSecond: 3
+  connWriterSize: 128
+register:
+  retrySecond: 3
+  registerSecond: 10
+authJwtKey: "helloworld"
+trace:
+  addr: "bloud-jaeger-svc:6831"
+  name: "mpc"
+pyroscope:
+  enable: false
+streamTaskTimeout: 3
+wsjsonRpc:
+  subChanSize: 512
+sequence:
+  checkinterval: 10
+  waitTime: 100
+master:
+  url: http://bloud-master:18800/api/v1/areas
+  interval: 10

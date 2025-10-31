@@ -1,0 +1,87 @@
+master:
+  port: 9801
+  name: 'sentinel'
+  id: ''
+  location: 'bj'
+  up_service: 'puller'
+  print_cost: true
+  print_tree: true
+  top: 1
+  monitor_port: 9804
+  expire_second: 60
+  info_invalid_num: 60
+  calculate_interval: 2
+  ping_interval: 2
+  service_cpu_max_percent: 999
+  service_mem_max_percent: 999
+  cpu_max_percent: 999
+  mem_max_percent: 999
+  disk_max_percent: 999
+  mem_max_percent: 999
+  max_bandwidth: 300
+  max_bandwidth_percent: 100
+  tree_depth: 4
+  cpu_pre: 30
+  band_pre: 30
+  mem_pre: 30
+  service_cpu_pre: 30
+  pre_cpu_time: 0.05
+  pre_band_time: 0.05
+  pre_mem_time: 0.05
+  pre_service_cpu_time: 0.05
+  pre_consume_expire: 2
+  sort_random_num: 10
+  first_load_expire: 86400
+  disk_health_gb: 2
+  cache_tree_expire: 5
+  qps_threshold: 1000
+  max_queueing_time_ms: 5000
+  cascade_limit_host_cpu: 10
+  cascade_limit_host_band: 10
+  cascade_limit_host_mem: 10
+  cascade_limit_service_cpu: 10
+  agent_limit_num: 1
+  shrink_band: 10
+  shrink_host_cpu: 10
+  shrink_service_cpu: 10
+  shrink_host_mem: 10
+  shrink_rate: 0.6
+  shrink_prefer: "hcpu"
+  default_version: "v2.0.6"
+  limit_group:
+    1:
+      lower: 0
+      upper: 2
+    2:
+      lower: 2
+      upper: 3
+    3:
+      lower: 3
+      upper: 4
+    4:
+      lower: 4
+      upper: 5
+    5:
+      lower: 5
+      upper: 9999
+  redis:
+    addrs:
+      - 'redis:6379'
+    password: 'privated'
+    database: 10
+    max_retry_time: 3
+    expire: 500
+logger:
+  caller: true
+  level: debug
+  logs:
+    path: 'logs/sentinel-master.log'
+    size: 500
+report:
+  caller: true
+  level: info
+  logs:
+    path: 'logs/report.log'
+    isUTC: true
+    size: 500
+    count: 3

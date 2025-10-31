@@ -1,0 +1,64 @@
+server:
+  port: 9998
+router:
+  file: ./config/table.json
+logger:
+  level: debug
+redis:
+  addrs:
+    - 'redis:6379'
+  password: 'privated'
+  database: 13
+  max_retry_time: 2
+jwt:
+  secret: "vloud"
+  expires: 3600
+CheckHealth:
+  checkLimit : 10
+  checkProtocol : "http"
+  checkRoute : "/health"
+  checkData:
+    bj: "puller:8992"
+minDiskHealthGB: 1
+intellentRouter:
+  router:
+    bj:
+      bj: 1
+  type: http
+  timeStamp: 1663416093
+Group:
+  -
+    - bj
+logger:
+  caller: true
+  level: "debug"
+  logs:
+    path: "logs/intelroute.log"
+    size: 500
+    count: 3
+report:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/report.log"
+    isUTC: true
+    size: 500
+    count: 2
+Survey:
+  interval: 3
+  duration: 30
+  intervalDataChannel: 10
+  maxLoopNum: 8
+  urls:
+    - location: "bj"
+      address: ""
+    - location: "sh"
+      address: ""
+Sniffer:
+  timeLimit: 3600
+  expireTime: 86400
+  Secret: ""
+  AccessToken: ""
+  Env: "pro"
+  Power: true
+  Path: "./data/ip.ipdb"

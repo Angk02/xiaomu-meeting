@@ -1,0 +1,37 @@
+Common:
+  type : Route
+  ip : "router"
+  port : 8999
+  location : bj
+  sentinelUrl : "intelroute:9998/logicAreaNode"
+  routerUrl : "http://messaging:8886"
+  retryTimes : 3
+  retrySubLimit : 1
+  retrySubInterval : 50
+  serviceName: "Route"
+  traceAddr: "127.0.0.1:6666"
+  skipAuth: false
+  jwtSecret : vloud
+  timeoutSecond : 10
+  minDiskHealthGB: 1
+  shutdownTimeout: 30
+  redisConfig:
+    address:
+      - 'redis:6379'
+    password: 'privated'
+    db: 12
+    prefix: "Route::"
+  report:
+    caller: true
+    level: "info"
+    logs:
+      path: "logs/report.log"
+      isUTC: true
+      size: 500
+      count: 3
+logger:
+  caller: true
+  level: "debug"
+  logs:
+    path: "logs/rtcs-route.log"
+    size: 500

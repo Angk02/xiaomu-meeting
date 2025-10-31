@@ -1,0 +1,25 @@
+port: 18800
+dc: jinan
+prefix: bloud-master
+ipdb: ./ip.ipdb
+tracing:
+  url: 127.0.0.1:6831
+  param: 0
+jwt:
+  secret: vloud
+  expires: 3600
+logger:
+  caller: false
+  level: info
+  logs:
+    path: "logs/matser.log"
+    size: 100
+    count: 10
+ldap:
+  enable: false
+  suffix: ""
+  url: ""
+redis:
+  address:  "redis:6379"
+  password: "privated"
+  db: 1

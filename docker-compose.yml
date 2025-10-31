@@ -1,0 +1,489 @@
+services:
+  mysql:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mysql:8.0.42
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Shanghai
+    command:
+      - "--default_authentication_plugin=mysql_native_password"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./middleware/mysql/data:/var/lib/mysql
+      - ./middleware/mysql/config:/etc/mysql/conf.d/
+    networks:
+      - videoconferencing
+
+
+  redis:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/redis:v6.0.9
+    container_name: redis
+    restart: always
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./middleware/redis/config:/etc/redis:ro
+      - ./middleware/redis/data:/data
+    networks:
+      - videoconferencing
+
+
+  nats:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/nats:latest
+    container_name: nats
+    restart: always
+    networks:
+      - videoconferencing
+
+
+  mongodb:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mongo:6.0.6-debian-11-r3
+    container_name: mongodb
+    restart: always
+    environment:
+      BITNAMI_DEBUG: 'false'
+      ALLOW_EMPTY_PASSWORD: 'yes'
+      MONGODB_SYSTEM_LOG_VERBOSITY: '0'
+      MONGODB_DISABLE_SYSTEM_LOG: 'no'
+      MONGODB_DISABLE_JAVASCRIPT: 'no'
+      MONGODB_ENABLE_JOURNAL: 'yes'
+      MONGODB_PORT_NUMBER: '27017'
+      MONGODB_ENABLE_IPV6: 'no'
+      MONGODB_ENABLE_DIRECTORY_PER_DB: 'no'
+    volumes:
+      - ./middleware/mongodb/scripts:/bitnami/scripts:ro
+    networks:
+      - videoconferencing
+
+
+  rabbitmq:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/rabbitmq:3.11.2-management-alpine
+    container_name: rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_VHOST: "/"
+      RABBITMQ_DEFAULT_USER: yulu
+      RABBITMQ_DEFAULT_PASS: yulu
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - videoconferencing
+
+  minio:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/minio:RELEASE.2021-06-17T00-10-46Z
+    container_name: minio
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin@123
+    volumes:
+      - ./middleware/minio/data/:/data
+    restart: always
+    networks:
+      - videoconferencing
+
+
+  msms:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/msms:v2.0.6
+    container_name: msms
+    restart: always
+    environment:
+      - MSMS_IP=${MSMS_IP}
+      - MSMS_EXTERNALIP=${MSMS_EXTERNALIP}
+    network_mode: "host"
+    volumes:
+      - ./media_service/msms/logs:/root/msms/restfullogs
+      - ./media_service/msms/config/config.json.template:/root/msms/.configs/config.json.template
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /root/msms/.configs/config.json.template > /root/msms/.configs/config.json && exec node --max-old-space-size=4096 ./restful/dist/index.js"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:31822/health"]
+      interval: 4s
+      timeout: 1s
+      retries: 8
+      start_period: 10s
+
+
+  sentinel:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/sentinel-master:v092102
+    container_name: sentinel
+    restart: always
+    ports:
+      - "9801:9801"
+      - "9804:9804"
+    volumes:
+      - ./media_service/sentinel/config:/configs:ro
+      - ./media_service/sentinel/logs:/logs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - msms
+
+
+  puller:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/rtcs:v05081401
+    container_name: puller
+    restart: always
+    ports:
+      - "8992:8992"
+    volumes:
+      - ./media_service/puller/logs:/logs
+      - /etc/localtime:/etc/localtime:ro
+      - ./media_service/puller/config:/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+
+
+  mpc:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mpc:v060701-3
+    container_name: mpc
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./media_service/mpc/logs:/root/mpc/logs
+      - ./media_service/mpc/config:/root/mpc/configs
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /root/mpc/configs/config.yaml.template > /root/mpc/configs/config.yaml && exec /root/mpc/mpc"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - nats
+
+
+  router:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/rtcs:v05081401
+    container_name: router
+    restart: always
+    volumes:
+      - ./media_service/router/logs:/logs
+      - ./media_service/router/config:/configs:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+
+
+  intelroute:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/intelroute:v060601
+    container_name: intelroute
+    restart: always
+    volumes:
+      - ./media_service/intelroute/logs:/logs
+      - ./media_service/intelroute/config:/configs:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+
+
+  messaging:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/messaging:v071301
+    container_name: messaging
+    restart: always
+    volumes:
+      - ./media_service/messaging/logs:/root/app/logs
+      - ./media_service/messaging/config:/root/messaging/configs:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - nats
+
+  master:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/brtcmaster:v061301
+    container_name: master
+    restart: always
+    volumes:
+      - ./media_service/master/logs:/root/brtcmaster/logs
+      - ./media_service/master/config:/root/brtcmaster/configs:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+      - mongodb
+
+
+  vrtm:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/vrtm:v3.2.1-pri-1
+    container_name: vrtm
+    #command: ["/app/vrm", "--env=test"]
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./media_service/vrtm/config/extra.yaml.template:/app/config/extra.yaml.template
+      - ./media_service/vrtm/logs:/app/logs
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /app/config/extra.yaml.template > /app/config/extra.yaml && exec /app/vrm"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+      - mysql
+
+ 
+  mcu:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu:v2.25.1028
+    container_name: mcu
+    restart: always
+    volumes:
+      - ./recording_service/mcu/record:/record
+      - ./recording_service/mcu/config:/root/mcu/configs:ro
+    network_mode: "host"
+    depends_on:
+      - redis
+      - rabbitmq
+
+
+  cloudproc:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/post-process:v2.23.11091830
+    container_name: cloudproc
+    restart: always
+    volumes:
+      - ./recording_service/mcu/record:/nas/record
+      - ./recording_service/cloudproc/config:/app/post-process/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+
+
+  sentinal:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu-cluster:v2.24.0813
+    container_name: sentinal
+    restart: always
+    command: ["/bin/bash", "-c", "npm run sentinel"]
+    volumes:
+      - ./recording_service/sentinal/config:/root/app/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+      - cloudproc
+      - redis
+      - rabbitmq
+
+
+  schedular:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu-cluster:v2.24.0813
+    container_name: schedular
+    restart: always
+    command: ["/bin/bash", "-c", "npm run scheduler"]
+    volumes:
+      - ./recording_service/schedular/config:/root/app/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+      - cloudproc
+      - redis
+      - rabbitmq
+
+
+  registry:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu-cluster:v2.24.0813
+    container_name: registry
+    restart: always
+    command: ["/bin/bash", "-c", "npm run registry"]
+    volumes:
+      - ./recording_service/registry/config:/root/app/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+      - cloudproc
+      - redis
+      - rabbitmq
+
+
+  monitor:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu-cluster:v2.24.0813
+    container_name: monitor
+    restart: always
+    command: ["/bin/bash", "-c", "npm run monitor"]
+    volumes:
+      - ./recording_service/monitor/config:/root/app/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+      - cloudproc
+      - redis
+      - rabbitmq
+
+
+  api:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/mcu-cluster:v2.24.0813
+    container_name: api
+    restart: always
+    command: ["/bin/bash", "-c", "npm run api"]
+    volumes:
+      - ./recording_service/api/config:/root/app/configs:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - mcu
+      - cloudproc
+      - redis
+      - rabbitmq
+
+  bag:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/bag:v1.0.1
+    container_name: bag
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./recording_service/bag/config/config.yaml.template:/root/bag/config.yaml.template:ro
+      - ./recording_service/bag/data/:/var/www/html/user-media
+    entrypoint: ["/bin/sh", "-c", "envsubst < /root/bag/config.yaml.template > /root/bag/config.yaml && exec /root/bag/bag"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - minio
+      - mongodb
+
+  bloud-master:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/bloud-master:v1.2.1
+    container_name: bloud-master
+    restart: always
+    volumes:
+      - ./conferencing_service/bloud-master/config:/opt/bloud/config:ro
+      - ./conferencing_service/bloud-master/logs:/opt/bloud/logs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+
+  bloud-roomserver:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/bloud-roomserver:v2.1.7.25
+    container_name: bloud-roomserver
+    restart: always
+    volumes:
+      - ./conferencing_service/bloud-roomserver/config:/opt/bloud/config:ro
+      - ./conferencing_service/bloud-roomserver/logs:/opt/bloud/logs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+      - nats
+
+  bloud-mpc:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/bloud-mpc:v2.1.8.5
+    container_name: bloud-mpc
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./conferencing_service/bloud-mpc/logs:/opt/bloud/logs
+      - ./conferencing_service/bloud-mpc/config:/opt/bloud/config
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /opt/bloud/config/config.yaml.template > /opt/bloud/config/config.yaml && exec /opt/bloud/mpc"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - nats
+      - bloud-master
+
+
+  saasapi:
+    image:  registry.cn-beijing.aliyuncs.com/webrtc-001/saasapi:amd64-v2.3.4-1407
+    container_name: saasapi
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./conferencing_service/saasapi/config/:/go/src/saasapi/config
+      - ./conferencing_service/saasapi/logs/:/go/src/saasapi/log:ro
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /go/src/saasapi/config/config.yaml.template > /go/src/saasapi/config/config.yaml && exec /go/src/saasapi/saasapi"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+      - mysql
+
+  vbusiness:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/vbusiness:amd64-v3.7.0-1119
+    container_name: vbusiness
+    restart: always
+    environment:
+      - DOMAIN_OR_PUBLICIP=${DOMAIN_OR_PUBLICIP}
+    volumes:
+      - ./conferencing_service/vbusiness/config/config.yaml.template:/root/vbusiness/config/config.yaml.template
+      - ./conferencing_service/vbusiness/logs/:/root/vbusiness/log:ro
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: ["/bin/sh", "-c", "envsubst < /root/vbusiness/config/config.yaml.template > /root/vbusiness/config/config.yaml && exec /root/vbusiness/vbusiness"]
+    networks:
+      - videoconferencing
+    depends_on:
+      - redis
+      - mysql
+
+  web-sdk:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/boom-web-sdk:3.7.14-3241
+    container_name: web-sdk
+    restart: always
+    networks:
+      - videoconferencing
+
+  web:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/rlh5:com-3.7.8-1642
+    container_name: web
+    restart: always
+    environment:
+      APP_NAME: ${APP_NAME:-xiaomu}
+      API_URL: https://${DOMAIN_OR_PUBLICIP}/
+      COMPANY_NAME: ${COMPANY_NAME:-xiaomu}
+      LOGO_MODE: 1
+    networks:
+      - videoconferencing
+
+  admin:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/rladmin:3.6.6-1236
+    container_name: admin
+    restart: always
+    environment:
+      APP_NAME: ${APP_NAME:-xiaomu}
+      API_URL: https://${DOMAIN_OR_PUBLICIP}/
+      LOGO_APP: no
+      LOGO_MODE: 1
+    networks:
+      - videoconferencing
+
+
+  nginx:
+    image: registry.cn-beijing.aliyuncs.com/webrtc-001/nginx:1.24
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+      - "1443:1443"
+      - "2443:2443"
+    volumes:
+      - ./middleware/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./middleware/nginx/proxy.conf:/etc/nginx/proxy.conf
+      - ./middleware/nginx/conf.d:/etc/nginx/conf.d
+      - ./middleware/nginx/certs:/etc/nginx/certs/
+    networks:
+      - videoconferencing
+
+
+networks:
+  videoconferencing:
+    driver: bridge

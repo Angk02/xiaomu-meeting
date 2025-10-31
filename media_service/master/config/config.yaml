@@ -1,0 +1,51 @@
+port: 8885
+dc: default
+intelRouteUrl: "http://intelroute:9998"
+prefix: Master
+ipdb: ip.ipdb
+tracing:
+   url:
+   param: 1
+jwt:
+  secret: vloud
+  expires: 3600
+  auth_key: vloud
+redis:
+  address: 'redis:6379'
+  password: 'privated' 
+  db: 15
+logger:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/master.log"
+    size: 500
+    count: 3
+    async: true
+mongo:
+  url: mongodb://mongodb
+  db: master
+  maxretrytime: 3
+request:
+  keep_alive: true
+  timeout: 5000
+  retry_count: 0
+  retry_interval: 200
+indicators:
+  sync_data_ms: 1500
+  check_health_ms: 1500
+  room_request_cache_ms: 1500
+  disk_health_gb: 1
+  keepalive_rate: 3
+  limit_cache_timeout_seconds: 600
+  accounts:
+    admin: bjsl@1234
+report:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/report.log"
+    isUTC: true
+    async: true
+    size: 500
+    count: 3

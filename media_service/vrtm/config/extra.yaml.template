@@ -1,0 +1,33 @@
+deploy_level: 3
+paas_service:
+  rtc:
+    open_url: https://${DOMAIN_OR_PUBLICIP}/
+    api_url: https://${DOMAIN_OR_PUBLICIP}/
+  vcollection:
+    url: 
+  ip_url: 
+jwt_auth:
+  paas_user: paas_user_jwt_auth_secret
+auth:
+  saas: saas_partner_auth_secret
+  mcu: paas_mcu_auth_secret
+  service: paas_service_auth_secret
+mysql_paas:
+  ip: mysql
+  port: 3306
+  user: root
+  password: root
+  db: vrtm
+redis:
+  ip: redis
+  password: privated
+  port: 6379
+clickhouse:
+  ip: 
+  port: 
+  username: 
+  password: 
+kafka:
+  brokers: 
+iceservers:
+  - url: 

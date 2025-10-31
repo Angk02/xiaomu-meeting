@@ -1,0 +1,50 @@
+[2025:09:06 20:44:34:312] [I] tid[36048] ProducerImpl::Start capture device name : 麦克风 (Jabra SPEAK 510 USB), playout device name : 扬声器 (Jabra SPEAK 510 USB), sink : 00000075DC0FF480, file:ProducerImpl.cpp line:121
+[2025:09:06 20:44:34:314] [I] tid[36048] CWASAPIRenderer::GetRenderDevice device index 0, name : 扬声器 (Jabra SPEAK 510 USB), file:WASAPIRenderer.cpp line:413
+[2025:09:06 20:44:34:314] [I] tid[36048] CWASAPIRenderer::GetRenderDevice find device with name : 扬声器 (Jabra SPEAK 510 USB), file:WASAPIRenderer.cpp line:416
+[2025:09:06 20:44:34:321] [I] tid[36048] CWASAPIRenderer::LoadFormat Audio Engine's current rendering mix format, samplerate : 48000, channels : 2, bits per sample : 32,block align : 8, average bytes per second : 384000, file:WASAPIRenderer.cpp line:140
+[2025:09:06 20:44:34:324] [I] tid[36048] CWASAPIRenderer::LoadFormat playout samplerate : 48000, channels : 2, bits per sample : 16, file:WASAPIRenderer.cpp line:203
+[2025:09:06 20:44:34:330] [I] tid[36048] AzureTTS::Start begin, file:AzureTTS.cpp line:6
+[2025:09:06 20:44:34:330] [I] tid[36048] AzureTTS::Start region : eastasia, file:AzureTTS.cpp line:21
+[2025:09:06 20:44:34:336] [I] tid[36048] AzureTTS::Start create speech config success, file:AzureTTS.cpp line:59
+[2025:09:06 20:44:34:336] [I] tid[36048] ProducerImpl::OnTTSStatus tts status : 1, file:ProducerImpl.cpp line:475
+[2025:09:06 20:44:34:336] [I] tid[36048] AzureTTS::Start success, file:AzureTTS.cpp line:102
+[2025:09:06 20:44:34:336] [I] tid[36048] AzureRecAndTrans::Start begin, file:AzureRecAndTrans.cpp line:5
+[2025:09:06 20:44:34:337] [I] tid[36048] AzureRecAndTrans::Start source language : zh, target language : en, file:AzureRecAndTrans.cpp line:18
+[2025:09:06 20:44:34:337] [I] tid[36048] AzureRecAndTrans::Start region : eastasia, file:AzureRecAndTrans.cpp line:22
+[2025:09:06 20:44:34:337] [I] tid[36048] AzureRecAndTrans::Start success, file:AzureRecAndTrans.cpp line:27
+[2025:09:06 20:44:34:337] [I] tid[41536] AzureTTS::worker enter, file:AzureTTS.cpp line:141
+[2025:09:06 20:44:34:337] [I] tid[27980] AzureRecAndTrans::worker enter, file:AzureRecAndTrans.cpp line:47
+[2025:09:06 20:44:34:337] [I] tid[27980] AzureRecAndTrans::worker create speech config success, file:AzureRecAndTrans.cpp line:85
+[2025:09:06 20:44:34:337] [I] tid[27980] AzureRecAndTrans::worker create audio format success, file:AzureRecAndTrans.cpp line:99
+[2025:09:06 20:44:34:337] [I] tid[27980] AzureRecAndTrans::worker create audio stream success, file:AzureRecAndTrans.cpp line:111
+[2025:09:06 20:44:34:337] [I] tid[27980] AzureRecAndTrans::worker create audio config success, file:AzureRecAndTrans.cpp line:123
+[2025:09:06 20:44:34:342] [I] tid[27980] ProducerImpl::OnTransStatus trans status : 1, file:ProducerImpl.cpp line:460
+[2025:09:06 20:44:34:342] [I] tid[36048] AudioCaptrue::Init friendly name : 麦克风 (Jabra SPEAK 510 USB), unique name : , file:AudioCapture.cpp line:14
+[2025:09:06 20:44:34:359] [I] tid[36048] AudioCaptrue::Init success, file:AudioCapture.cpp line:70
+[2025:09:06 20:44:34:359] [I] tid[36048] AudioCaptrue::SetPlayoutDevice playout device : 扬声器 (Jabra SPEAK 510 USB), file:AudioCapture.cpp line:104
+[2025:09:06 20:44:34:360] [I] tid[36048] CWASAPIRenderer::GetRenderDevice device index 0, name : 扬声器 (Jabra SPEAK 510 USB), file:WASAPIRenderer.cpp line:413
+[2025:09:06 20:44:34:360] [I] tid[36048] CWASAPIRenderer::GetRenderDevice find device with name : 扬声器 (Jabra SPEAK 510 USB), file:WASAPIRenderer.cpp line:416
+[2025:09:06 20:44:34:361] [I] tid[36048] CWASAPIRenderer::LoadFormat Audio Engine's current rendering mix format, samplerate : 48000, channels : 2, bits per sample : 32,block align : 8, average bytes per second : 384000, file:WASAPIRenderer.cpp line:140
+[2025:09:06 20:44:34:362] [I] tid[36048] CWASAPIRenderer::LoadFormat playout samplerate : 48000, channels : 2, bits per sample : 16, file:WASAPIRenderer.cpp line:203
+[2025:09:06 20:44:34:369] [I] tid[36048] ProducerImpl::Start success, file:ProducerImpl.cpp line:327
+[2025:09:06 20:44:34:405] [I] tid[28948] AudioCaptrue::OnAudioDecodedFrame testaudio path : G:\VirtualMic\Producer\output\x64\Release\testaudio.pcm, file:AudioCapture.cpp line:271
+[2025:09:06 20:44:41:009] [I] tid[43752] ProducerImpl::OnTransResult trans result, original : 同志们朋友们，女士们先生们，大家好。, translation : Hello comrades and friends, ladies and gentlemen., file:ProducerImpl.cpp line:464
+[2025:09:06 20:44:45:285] [I] tid[43752] ProducerImpl::OnTransResult trans result, original : 时间过得很快。, translation : Time flies., file:ProducerImpl.cpp line:464
+[2025:09:06 20:44:46:899] [I] tid[43752] ProducerImpl::OnTransResult trans result, original : 新的一年即将到来。, translation : A new year is coming., file:ProducerImpl.cpp line:464
+[2025:09:06 20:44:48:495] [I] tid[36048] ProducerImpl::Stop start, file:ProducerImpl.cpp line:381
+[2025:09:06 20:44:48:504] [I] tid[36048] AudioCaptrue::Stop success, file:AudioCapture.cpp line:197
+[2025:09:06 20:44:48:504] [I] tid[36048] AudioCaptrue::Release start, file:AudioCapture.cpp line:77
+[2025:09:06 20:44:48:505] [I] tid[36048] AudioCaptrue::Release success, file:AudioCapture.cpp line:100
+[2025:09:06 20:44:48:505] [I] tid[36048] AzureRecAndTrans::Stop begin, file:AzureRecAndTrans.cpp line:32
+[2025:09:06 20:44:48:505] [I] tid[36048] AzureRecAndTrans::Stop wait for work thread exit, file:AzureRecAndTrans.cpp line:39
+[2025:09:06 20:44:48:505] [I] tid[27980] AzureRecAndTrans::worker worker thread finish, file:AzureRecAndTrans.cpp line:165
+[2025:09:06 20:44:48:505] [I] tid[27980] AzureRecAndTrans::worker exit, file:AzureRecAndTrans.cpp line:192
+[2025:09:06 20:44:48:505] [I] tid[36048] AzureRecAndTrans::Stop work thread exit success, file:AzureRecAndTrans.cpp line:41
+[2025:09:06 20:44:48:505] [I] tid[36048] AzureRecAndTrans::Stop success, file:AzureRecAndTrans.cpp line:43
+[2025:09:06 20:44:49:579] [I] tid[36048] AzureTTS::Stop begin, file:AzureTTS.cpp line:107
+[2025:09:06 20:44:49:727] [I] tid[36048][2025:09:06 20:44:49:727] [I] tid[41536] AzureTTS::worker worker finish, file:AzureTTS.cpp line:159
+ AzureTTS::Stop wait for work thread exit, file:AzureTTS.cpp line:120
+[2025:09:06 20:44:49:727] [I] tid[41536] AzureTTS::worker exit, file:AzureTTS.cpp line:194
+[2025:09:06 20:44:49:729] [I] tid[36048] AzureTTS::Stop work thread exit success, file:AzureTTS.cpp line:122
+[2025:09:06 20:44:49:729] [I] tid[36048] AzureTTS::Stop success, file:AzureTTS.cpp line:130
+[2025:09:06 20:44:49:736] [I] tid[36048] ProducerImpl::Stop success, file:ProducerImpl.cpp line:429

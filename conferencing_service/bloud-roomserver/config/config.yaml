@@ -1,0 +1,25 @@
+common:
+  nats: "nats://nats:4222"
+  natsUser: ""
+  natsPwd: ""
+  request: "bloud-roomServer-request"
+  response: "bloud-roomServer-response"
+  bordcast: "bloud-roomServer-bordCastMpc"
+  port: 8881
+  version: "1.0.0"
+  mpcTimeout: 30
+redis:
+  address:  "redis:6379"
+  password: "privated"
+  db: 3
+  poolsize: 1000
+logger:
+  caller: true
+  level: "info"
+  logs:
+    path: "logs/message.log"
+    size: 500
+roomCheckUrl: "http://saasapi:6090/v2/stream/room/rights"
+textCheckUrl: ""
+trace:
+  addr: 'bloud-jaeger-svc:6831'

@@ -1,0 +1,68 @@
+web:
+  host: "https://${DOMAIN_OR_PUBLICIP}/saasapi/"
+  intranetHost: "http://saasapi:6090"
+  port: 6090
+  ssl: false
+  mode: debug
+  jwtKey: "helloworld"
+  license: e1nojkafDjxnNocfWSAOBzopYVCVsOjklDXB6wwag6+nqYWE1a8Kg6VU/X4Qkl4UQprlC/uMzChD24vAanKFj1QAEgJgo1LKXt4sYPFU1MU35wtjQO2CqMf/OIYEsIfmxTOMlsx319+XiR9L0ZEN9ebLIDnuV0EBY6MfNCo+Ng0=
+log:
+  -
+    name: "gin"
+    save: 7
+    file: "gin.txt"
+  -
+    name: "default"
+    save: 7
+    file: "log.txt"
+  -
+    name: "bmcu"
+    save: 7
+    file: "bmcu.txt"
+  -
+    name: "roomcallback"
+    save: 7
+    file: "roomcallback.txt"
+  - 
+    name: "roomnotifynosend"
+    save: 7
+    file: "roomnotifynosend.txt"
+  -
+    name: "console"
+    save: 3
+    file: "console.txt"
+  -
+    name: "bloud"
+    save: 3
+    file: "bloud.txt"
+  -
+    name: "bag"
+    save: 3
+    file: "bag.txt"
+  - 
+    name: "sql"
+    save: 3
+    file: "sql.txt"
+db: "root:root@tcp(mysql:3306)/saasapi?charset=utf8&parseTime=True&loc=Local"
+redis:
+  host: "redis:6379"
+  pwd: "privated"
+  db: 2
+vloud:
+  masterApi: "https://${DOMAIN_OR_PUBLICIP}/bloud-master/"
+  roomApi: "http://bloud-roomserver:8881"
+bmcu:
+  host: "http://api:3000"
+  notifyUrl: "http://saasapi:6090"
+  outputFormat: "mp4"
+  auxOutputFormat: "mp3"   
+bag:
+  host: "http://bag:9905"
+  recordAlertCapacity: ""
+brtc:
+  api: "https://${DOMAIN_OR_PUBLICIP}/"
+  standbyApi: ""
+  roomApi: 
+  rtcs:
+  key: PaasPrivateKeyDevelopApplication
+  secret: PaasPrivateKeyDevelopAppPassword
