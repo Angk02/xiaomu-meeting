@@ -64,7 +64,7 @@ xiaomu-meeting 是一款开源的视频会议解决方案，旨在帮助企业�
 克隆 xiaomu-meeting 源代码至本地环境。
 
 ```bash
-git clone https://github.com/Angk02/xiamu-meeting.git --branch main
+git clone https://github.com/Angk02/xiaomu-meeting.git --branch main
 ```
 
 ### 2. 启动服务
