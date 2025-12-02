@@ -21,7 +21,8 @@ xiaomu-meeting 是一款开源的视频会议解决方案，旨在帮助企业�
 
 ###  实时语音翻译解决方案 — CrossTalk
 
-*   **简介**：`CrossTalk` 是一款客户端程序，用于实现语音的实时翻译并以翻译后的语音输出，从而让不同语言在视频会议中可以实时沟通。
+* **简介**：`CrossTalk` 是一款客户端程序，用于实现语音的实时翻译并以翻译后的语音输出，从而让不同语言在视频会议中可以实时沟通。
+
 *   **使用流程**：
 	1. **启动 CrossTalk 客户端** - 双击打开 CrossTalk 应用程序，进入主界面。
 	2. **配置虚拟音频设备（Virtual Speaker）** - 在 Virtual Speaker 下拉菜单中选择 R4 (VB-Audio Virtual Cable)，这是将客户端的输出音频虚拟到系统音频中，供视频会议使用。
@@ -29,8 +30,15 @@ xiaomu-meeting 是一款开源的视频会议解决方案，旨在帮助企业�
 	4. **视频会议中设置麦克风** - 打开xiaomu-meeting视频会议软件，在麦克风选择列表中选择 VB-Audio Virtual Cable 对应的设备，这样会议软件接收到的就是 CrossTalk 翻译后的输出语言音频。
 	5. **开始翻译** - 点击 CrossTalk 客户端的 Start 按钮，输入的语音将实时翻译并通过虚拟音频设备传输到视频会议中。在客户端文本框中可以看到原文（Input Language）和翻译后的文本（Output Language）。
 	6. **其他功能** - 使用 Clear 清空当前文本显示，或点击 Save 保存翻译的文本到本地文件。
-*   **说明**：该功能基于项目内置的智能翻译引擎，支持多语言实时翻译。可通过安装并运行 `CrossTalk` 来获得实时语音翻译体验。
+	
+* **说明**：该功能基于项目内置的智能翻译引擎，支持多语言实时翻译。可通过安装并运行 `CrossTalk` 来获得实时语音翻译体验。
 
+  
+
+* **流程图**
+  ![alt text](images/crosstalk-1.png)
+
+* **使用图**
 ![alt text](images/crosstalk.png)
 
 ---
