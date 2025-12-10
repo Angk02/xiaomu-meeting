@@ -196,3 +196,11 @@ docker compose ps
 ---
 
 ✨ **感谢您对 xiaomu-meeting 的关注！** 😊
+
+## 许可证
+
+本项目采用 [木兰公共许可证 v2 (MulanPSL v2)](./LICENSE) 进行授权。
+
+### 重要免责声明
+
+**禁止将本产品用于以下用途**：黄赌毒、诈骗等非法活动。详见 [免责声明](./DISCLAIMER.md)。
