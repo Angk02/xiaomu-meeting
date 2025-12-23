@@ -181,6 +181,7 @@ docker compose ps
 如有商务合作、功能定制或其他问题，欢迎通过以下方式与我们联系：
 
 📧 **邮箱**：[xiaomu_meeting@163.com](mailto:xiaomu_meeting@163.com)
+🌍 **技术支持 QQ 群**：1070970909
 
 ---
 
