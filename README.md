@@ -155,6 +155,9 @@ docker compose ps
 - 🌐 [用户端体验地址](https://39.105.174.114/)
 - 🛠 [管理端体验地址](https://39.105.174.114/admin/)
 - 🔑 账号 / 密码：18888888888 / Xiaomu@123
+- 🖥️ [Windows客户端下载地址](http://clientpkg.boom.cn/download/channel/xiaomu/xiaomumeeting-3.7.9-Setup.exe)
+- 💻 [Mac客户端下载地址](http://clientpkg.boom.cn/download/channel/xiaomu/%E5%B0%8F%E7%9B%AE%E4%BC%9A%E8%AE%AE-x64-3.7.9.dmg)
+- 📱 [Android客户端下载地址](http://clientpkg.boom.cn/download/channel/xiaomu/XiaoMu-v1.0.0_1.apk)
 ### 1. 登录
 
 ![登录](images/login.gif)
