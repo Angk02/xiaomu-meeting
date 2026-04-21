@@ -17,7 +17,11 @@ services:
       - ./middleware/mysql/config:/etc/mysql/conf.d/
     networks:
       - videoconferencing
-
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
   redis:
     image: registry.cn-beijing.aliyuncs.com/webrtc-001/redis:v6.0.9
