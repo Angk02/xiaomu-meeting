@@ -5,7 +5,7 @@ paas_service:
     api_url: https://${DOMAIN_OR_PUBLICIP}/
   vcollection:
     url: 
-  ip_url: 
+  ip_url: https:///${DOMAIN_OR_PUBLICIP}/vrm/api/client/ip
 jwt_auth:
   paas_user: paas_user_jwt_auth_secret
 auth:
